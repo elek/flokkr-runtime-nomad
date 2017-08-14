@@ -1,0 +1,43 @@
+- hosts: all
+  tasks:
+    - name: install zip
+      apt:
+        name: unzip
+    - name: Download nomad
+      get_url:
+        url: https://releases.hashicorp.com/nomad/0.6.0/nomad_0.6.0_linux_amd64.zip
+        dest: /tmp/nomad.zip
+    - name: unpack nomad
+      unarchive:
+        remote_src: yes
+        src: /tmp/nomad.zip
+        dest: /usr/bin/
+    - name: execution permission
+      file:
+        path: /usr/bin/nomad
+        mode: 755
+    - name: create nomad config dir
+      file:
+        path: /etc/nomad
+        state: directory
+    - name: copy config files
+      copy:
+         src: server.hcl
+         dest: /etc/nomad/server.hcl
+    - name: copy systemd descriptor
+      copy:
+        src: nomad.service
+        dest: /lib/systemd/system/nomad.service
+    - name: copy client config file
+      copy:
+        src: client.hcl
+        dest: /etc/nomad/client.hcl
+    - name: restart system
+      systemd:
+        daemon_reload: true
+        state: started
+        name: nomad.service
+    - name: restart system
+      systemd:
+        state: restarted
+        name: nomad.service

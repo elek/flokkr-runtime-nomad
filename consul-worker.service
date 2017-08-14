@@ -1,0 +1,10 @@
+[Unit]
+Description=consul
+
+[Service]
+ExecStart=/usr/bin/consul agent -data-dir /var/lib/consul -client 0.0.0.0 -advertise {{hostvars[inventory_hostname]['network_interface.0.address']}} --join {{hostvars[groups['nomad.0'][0]]['network_interface.0.address']}} 
+ExecReload=/bin/kill -HUP $MAINPID
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
