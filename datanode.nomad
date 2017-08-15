@@ -27,8 +27,8 @@ job "slave" {
          CONSUL_KEY =  "hdfs"
       }
       resources {
-            cpu    = 900
-            memory = 1000
+            cpu    = 1000
+            memory = 2000
       }
     }
   }

@@ -37,7 +37,3 @@
         daemon_reload: true
         state: started
         name: nomad.service
-    - name: restart system
-      systemd:
-        state: restarted
-        name: nomad.service

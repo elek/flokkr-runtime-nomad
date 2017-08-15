@@ -27,8 +27,8 @@ job "gateway" {
          ENSURE_NAMENODE_DIR = "/data/namenode"
       }
       resources {
-            cpu    = 500
-            memory = 1500
+            cpu    = 1000
+            memory = 2000
             network {
               port "http" {}
             }

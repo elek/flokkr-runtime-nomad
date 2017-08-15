@@ -40,9 +40,3 @@
          daemon_reload: true
          state: started  
          name: consul.service
-     - name: restart system
-       systemd:
-         daemon_reload: true
-         state: restarted
-         name: consul.service
-

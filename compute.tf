@@ -6,11 +6,11 @@ provider "google" {
 }
 
 resource "google_compute_instance" "nomad" {
- count = 5
+ count = 3
  project = "flokkr-175620"
  zone = "europe-west1-d"
  name = "nomad-${count.index}"
- machine_type = "n1-standard-1"
+ machine_type = "n1-standard-2"
  disk {
    image = "ubuntu-1604-xenial-v20170803"
  }
@@ -32,4 +32,7 @@ resource "google_compute_instance" "nomad" {
 
 output "master_ip" {
  value = "${google_compute_instance.nomad.0.network_interface.0.address}"
+}
+output "external_ip" {
+ value = "${google_compute_instance.nomad.0.network_interface.0.access_config.0.assigned_nat_ip}"
 }
