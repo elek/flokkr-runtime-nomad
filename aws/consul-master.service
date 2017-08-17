@@ -1,0 +1,10 @@
+[Unit]
+Description=consul
+
+[Service]
+ExecStart=/usr/bin/consul agent -ui -client 0.0.0.0 -data-dir /var/lib/consul --bootstrap --server -advertise {{hostvars[groups['nomad.0'][0]]['private_ip']}}
+ExecReload=/bin/kill -HUP $MAINPID
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

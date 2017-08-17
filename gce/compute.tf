@@ -6,7 +6,7 @@ provider "google" {
 }
 
 resource "google_compute_instance" "nomad" {
- count = 3
+ count = 5
  project = "flokkr-175620"
  zone = "europe-west1-d"
  name = "nomad-${count.index}"
@@ -26,7 +26,7 @@ resource "google_compute_instance" "nomad" {
     user = "ubuntu"
  }
  provisioner "remote-exec" {
-    script = "docker-install.sh"
+    script = "../docker-install.sh"
  }
 }
 

@@ -1,0 +1,42 @@
+---
+- hosts: all
+  tasks: 
+     - name: datadir for consul
+       file:
+         path: /var/lib/consul
+         state: directory
+     - name: install zip
+       apt:
+         name: unzip
+     - name: Download consul
+       get_url:
+         url: https://releases.hashicorp.com/consul/0.9.2/consul_0.9.2_linux_amd64.zip
+         dest: /tmp/consul.zip
+     - name: unpack consul
+       unarchive:
+         remote_src: yes
+         src: /tmp/consul.zip
+         dest: /usr/bin/
+     - name: execution permission
+       file:
+         path: /usr/bin/consul
+         mode: 755
+- hosts: nomad.0
+  tasks:
+     - name: copy systemd descriptoion
+       template: 
+         src: consul-master.service
+         dest: /lib/systemd/system/consul.service
+- hosts: all,!nomad.0
+  tasks:
+     - name: copy systemd descriptoion
+       template:
+         src: consul-worker.service
+         dest: /lib/systemd/system/consul.service
+- hosts: all
+  tasks:
+     - name: restart system
+       systemd:
+         daemon_reload: true
+         state: started  
+         name: consul.service
