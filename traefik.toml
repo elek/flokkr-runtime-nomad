@@ -1,0 +1,10 @@
+defaultEntryPoints = ["http"]
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+
+[consulCatalog]
+  endpoint = "127.0.0.1:8500"
+
+[web]
+  address = ":8080"

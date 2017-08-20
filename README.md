@@ -23,3 +23,55 @@ Ansible and terraform scripts to install hadoop cluster based on [flokkr](https:
 | Service discovery                        | Required for flexible scheduling (Consul based) |
 | Data locality                            | Yes, Full                                |
 | Availability of the ports                | All of them are available (Host network) |
+
+
+## Getting started
+
+You need a cluster. use terraform or any other tool to start it.
+
+### Prerequisits 
+
+* Install docker to the nodes
+* Install consul to every node
+* Install nomad to the nodes
+
+### Configuration
+
+Configuration is stored in consul and downloaded by every docker image.
+
+First you need a configuration set:
+
+```
+git clone https://github.com/flokkr/configuration.git
+```
+
+You should install the configuration upload (which uploads the configuration with additional preprcessing:
+
+```
+go get github.com/flokkr/consync
+```
+
+And now you can upload the configuration:
+
+```
+consync -dir ~/projects/flokkr/configuration -consul node-1 -discovery consul
+```
+
+Where node-1 is the hostname of a consul node
+
+### Nomad
+
+Now you can start the images with
+
+```
+export NOMAD_ADDR=http://node-1:4646
+```
+
+Ann finally:
+
+```
+nomad run namenode.nomad
+nomad run datanode.nomad
+...
+```
+

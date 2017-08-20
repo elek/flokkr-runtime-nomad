@@ -1,10 +1,10 @@
-job "datanode" {
+job "nodemanager" {
   datacenters = ["dc1"]
 
   type = "system"
 
 
-  group "datanode" {
+  group "nodemanager" {
     count = 1
 
     restart {
@@ -14,17 +14,17 @@ job "datanode" {
       mode = "delay"
     }
 
-    task "datanode" {
+    task "nodemanager" {
       driver = "docker"
 
       config {
-        image = "flokkr/hadoop-hdfs-datanode:latest"
+        image = "flokkr/hadoop-yarn-nodemanager:latest"
         network_mode = "host"
         force_pull = true
       }
       env {
          CONFIG_TYPE = "consul"
-         CONSUL_KEY =  "hdfs"
+         CONSUL_KEY =  "yarn"
       }
       resources {
             cpu    = 500
