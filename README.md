@@ -13,7 +13,7 @@ Ansible and terraform scripts to install hadoop cluster based on [flokkr](https:
 | Multihost support                        | Yes. Nomad agents should run everywhere  |
 | Requirements on the hosts                | Consul and Nomad agents                  |
 | Definition of the containers per host    | Nomad job descriptors                    |
-| Scheduling (find hosts with available resource) | Yes, find grained constraint rules       |
+| Scheduling (find hosts with available resource) | Yes, fine-grained constraint rules       |
 | Failover on host crash                   | N/A                                      |
 | Scale up/down:                           | With mondifying the Nomad job specifications |
 | Multi tenancy (multiple cluster)         | NO (Host network)                        |
