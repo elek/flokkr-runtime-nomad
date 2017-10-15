@@ -1,5 +1,6 @@
 job "nodemanager" {
-  datacenters = ["dc1"]
+  datacenters = [
+    "dc1"]
 
   type = "system"
 
@@ -7,28 +8,32 @@ job "nodemanager" {
   group "nodemanager" {
     count = 1
 
-    restart {
-      attempts = 10
-      interval = "5m"
-      delay = "25s"
-      mode = "delay"
+    ephemeral_disk {
+      migrate = true
+      size = "1024"
+      sticky = true
     }
 
     task "nodemanager" {
       driver = "docker"
 
       config {
-        image = "flokkr/hadoop-yarn-nodemanager:latest"
+        image = "flokkr/hadoop-yarn-nodemanager:3.0.0-beta1-RC0"
         network_mode = "host"
         force_pull = true
+        volumes = [
+          "local/data:/data"
+        ]
+        #{include "logging.nomad"}#
       }
       env {
-         CONFIG_TYPE = "consul"
-         CONSUL_KEY =  "yarn"
+        CONFIG_TYPE = "consul"
+        CONSUL_KEY = "yarn"
+        HADOOP_LOG_DIR = "/tmp"
       }
       resources {
-            cpu    = 500
-            memory = 1000
+        cpu = 500
+        memory = 2001
       }
     }
   }

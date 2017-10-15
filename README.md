@@ -34,6 +34,7 @@ You need a cluster. use terraform or any other tool to start it.
 * Install docker to the nodes
 * Install consul to every node
 * Install nomad to the nodes
+* Install sigil (http://github.com/gliderlabs/sigil)
 
 ### Configuration
 
@@ -67,11 +68,11 @@ Now you can start the images with
 export NOMAD_ADDR=http://node-1:4646
 ```
 
-Ann finally:
+And finally:
 
 ```
-nomad run namenode.nomad
-nomad run datanode.nomad
+./apply.sh namenode.nomad
 ...
 ```
 
+Note: apply.sh is a short script to do client side templating using the sigil utility.
