@@ -32,7 +32,7 @@ job "prometheus" {
       }
       resources {
         cpu = 1000
-        memory = 2001
+        memory = 2003
         network {
           port "web" {
             static = 9090

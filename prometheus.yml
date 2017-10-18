@@ -7,3 +7,8 @@ scrape_configs:
         - server: localhost:8500
           services:
            - jmxexporter
+  - job_name: telegraf
+    consul_sd_configs:
+        - server: localhost:8500
+          services:
+           - telegraf
