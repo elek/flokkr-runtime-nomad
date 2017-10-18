@@ -6,3 +6,8 @@ logging {
   }
 }
 #{end}#
+#{with var "JSON_LOGGING"}#
+logging {
+  type = "json-file"
+}
+#{end}#
